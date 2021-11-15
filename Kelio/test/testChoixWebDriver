@@ -1,0 +1,20 @@
+
+print("Choisise entre chrome, firefox ou ie")
+navigateur=input("")
+
+
+def Navigateur_par_defaut(navigateur,driver):
+"""
+Run class initialization method, the default is proper
+to drive the Firefox navigateur,. Of course, you can also
+pass parameter for other navigateur, such as Chrome navigateur for the "Chrome",
+the Internet Explorer navigateur for "internet explorer" or "ie".
+"""
+if navigateur == "firefox" :
+    driver = webdriver.Firefox()
+elif navigateur == "chrome":
+    driver = webdriver.Chrome()
+elif navigateur == "ie" :
+    driver = webdriver.Ie()
+elif navigateur == "phantomjs":
+    driver = webdriver.PhantomJS()

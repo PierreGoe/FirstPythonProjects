@@ -1,0 +1,1174 @@
+<!-- Contenu : /common/pageSelectionUtilisateur.jsp --><!doctype html>
+<html>
+	<head>
+		<Base href="http://kelio.itga.fr:80/open/" ><title>Déclarations de présence</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />		
+		<link rel="shortcut icon" href="/open/images/module/icn_module_espace_perso.1550136561657.png" />
+		<link rel="stylesheet" type="text/css" href="/open/css/commun.1542042368000.css"/><link rel="stylesheet" type="text/css" href="/open/css/style.1542042368000.css"/><link rel="stylesheet" type="text/css" href="/open/css/calendrier.1542042368000.css"/><link rel="stylesheet" type="text/css" href="/open/css/cssDyn.C52B27DCE18F4B384CDF036114E6CBAC.jsp"/><script language="JavaScript" type="text/javascript" src="/open/js/common.1542042368000.js"></script><script language="JavaScript" type="text/javascript" src="/open/js/BModal.1542042368000.js"></script><script language="JavaScript" type="text/javascript"><!--
+BModal.CLOSE_IMAGE   = "/open/img/btn_cancel_white.1452099624000.png";
+BModal.WAIT_IMAGE    = "/open/img/images/wait.1350547314000.gif";
+BUtility.CTXT_PATH   = "/open";
+BUtility.SCD_OFFSET   = 30;
+BUtility.KEEP_ALIVE_DELAY		= 540000; 
+BUtility.KEEP_ALIVE_COUNTDOWN	= 66;
+
+function initFct()
+{
+	try	{
+		if(BCalendar)
+		{
+			BCalendar.IMAGE_PREV = "/open/img/navLeft.1350547314000.gif";
+			BCalendar.IMAGE_NEXT = "/open/img/navRight.1350547314000.gif";
+			BCalendar.IMAGE_DELETE= "/open/img/btn_cancel_blue.1452099624000.png";
+		}
+	}catch(err){}
+	try	{fcInitPage();}catch(err){}
+}
+function checkDate(inputElt)
+{
+	var dateSaisie = inputElt.value;
+	var myRegex = new RegExp("^([0-2][0-9]|[3][0-1])\/([0][0-9]|[1][0-2])\/((19|20)[0-9]{2})$");
+
+	if (!dateSaisie.match(myRegex))
+	{
+		alert("Incorrect date: pattern must match dd/mm/yyyy");
+	}
+}
+submited = false;
+validable = true;
+
+function fcShowUserName()
+{
+    toOutput = 'GOEMANS';
+    fcRefreshStatusBar();
+    return true;
+}
+function fcDoActionSansClignotement(aAction)
+{
+    form = document.formAction;
+    form.ACTION.value = aAction;
+    form.submit();
+}
+function fcQuitter()
+{
+    form = document.formAction;
+    form.action='/open/global';
+    fcDoAction('QUITTER');
+}
+
+		function fcValider()
+		{
+			fcDoAction('VALIDER_DECLARATIONS_BADGE');
+		}
+		function fcAppuiTouche(event)
+		{
+		    var code = event.which ? event.which : event.keyCode;
+		    if (code==13)
+		    {
+		      fcValider();
+		    }
+		}
+		function fcMyAccount()
+		{
+			BModal.TRAD_CLOSE    = "Annuler";
+			BModal.TRAD_VALIDATE = "Valider";
+			BModal.showModal("Personnalisation du compte", "fcValiderMyAccount()");
+			BModal.loadFromPage("/open/global?ACTION=AFFICHER_MY_ACCOUNT");
+		}
+		function fcValiderMyAccount()
+		{
+			BAjax.submitForm("formMyAccount",
+							 "/open/global?ACTION=VALIDER_MY_ACCOUNT",
+							fcRetourValiderMyAccount);
+		}
+-->		</script>
+	</head>
+	<body topmargin="0" leftmargin="0" marginheight="0" marginwidth="0" onLoad="BUtility.startKeepAlive();initFct();fcShowUserName();initTitles();fixPng();" height="100%" width="100%">
+<div id="msgWait" class="wait">TRAITEMENT EN COURS...</div>
+	<div id="barreTitre" class="barretitre"></div>
+	<form id="formAction" name="formAction" method="post" action="/open/webgtp/declarebadge" onsubmit="return false;">
+  		<input type="hidden" name="ACTION" id="ACTION" value=""><input type="hidden" name="ACTION_SWITCH" id="ACTION_SWITCH" value=""><!-- BANNIERE ET LOGO -->
+<img border="0" src="/open/img/vide.1350547314000.gif" height="90px" alt=""><!-- fixe la hauteur de bannière haute -->
+		<div style="position:absolute; top:0px; height: 90px; width:100%; left:0px; right: 0px;" >
+        	<img border="0" src="/open/img/perso_transparence.1350547314000.gif" height="100%" style="position: absolute; left: 21%; top: 0px;z-index:2;" alt=""><div class="banniere_logo_bodet">&nbsp;</div><div class="banniere_dateheure"><span id="date">
+18 octobre 2019<br>Heure officielle&nbsp;06:02</span></div><div class="banniere_title" style='width:100%;'><center><table cellpadding='1' cellspacing='0'><tr valign="middle" style="font-size:12px;"><td><img src=/open/images/bandeau/bandeau_logo_module_intranet.1550136561657.png border="0"/></td><td class="banniere_module"><b>&nbsp;Espace personnel</b></td></tr></table></center></div>
+<img class="logo_client" src="/open/portail/datas/logo.-1.jpg" height="45px" />
+<div class="menuPrincipal" style="position: absolute; bottom: 0px; left:0px;z-index:10;">
+				<script type="text/javascript">
+  function fcChangeAppli(aApplication)
+  {
+    form = document.formAction;
+    form.choixApplication.value = aApplication;
+    form.action = '/open/global';
+    fcDoAction('CHANGER_APPLI');
+  }
+</script>
+
+<input type="hidden" name="choixApplication" id="choixApplication" value="7" ><input type="hidden" name="application" id="application" value="7" ><center>
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr>
+<td width="5%" class="separateur">&nbsp;</td>
+<td width='strTailleCol' class='tdapplication' align="center">
+<a href='javascript:fcChangeAppli(1)' class='application'>Badgeuse virtuelle</a>
+</td>
+<td width='1px' class='interItem'>&nbsp;
+<td width='strTailleCol' class='tdapplication' align="center">
+<a href='javascript:fcChangeAppli(3)' class='application'>Résultats personnels</a>
+</td>
+<td width='1px' class='interItem'>&nbsp;
+<td width='strTailleCol' class='tdapplication' align="center">
+<a href='javascript:fcChangeAppli(6)' class='application'>Demande d'absence</a>
+</td>
+<td width='1px' class='interItem'>&nbsp;
+<td width='strTailleCol' class='tdapplicationselectionne' align="center">
+<a href='javascript:fcChangeAppli(7)' class='applicationselectionne'>Déclaration de présence</a>
+</td>
+<td class="separateur">&nbsp;</td>
+</tr>
+</table>
+</center>
+</div>
+</div>
+			<div class="common_actions" style="color:#406080">
+<a id="my account" style="color:#406080" href="javascript:fcMyAccount()">Mon compte</a>
+|
+<a id="help" style="color:#406080" href="help/10" target="help">Aide</a>
+|
+<a id="deconnexion" style="color:#406080" href="javascript:fcQuitter()">Quitter</a>
+</div>
+<div class="ariane" style="margin-top: 10px;">
+				<img border="0" src="/open/img/puceAriane.1350547314000.png" height="26px" alt=""><div>Déclarations de présence</div>
+			</div>
+<div class="bandeauOption">
+<br>	    
+		&nbsp;&nbsp; GOEMANS Pierre</div>
+<table width='100%' border='0' cellspacing='0' cellpadding='0' height="*">
+  <tr height="*">
+  	<td width="10">&nbsp;</td>
+<td width="170" align="left" valign="top">
+    	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    	    <tr>
+    			<td>
+    				<script type='text/javascript'>
+	function openChart(aLink, aWidth, anHeight)
+	{
+	    window.open(aLink,"_blank","toolbar=no,location=no,directories=no,status=no,scrollbars=no,resizable=no,copyhistory=no,width=" + aWidth + ",height=" + anHeight + ",left=0,top=0");
+	}
+</script>
+<ul class="menu">
+	<li class="selectionne">
+  				<a href="javascript:fcDoAction('AFFICHER_DECLARATIONS_BADGE');">Déclarer</a>
+  			</li>
+		</ul>
+</td>
+    		</tr>
+    		<tr>
+    			<td>
+    				<script language="JavaScript" type="text/javascript">
+function fcConsulterDBDemandeur(etat, date)
+{
+    form = document.formAction;
+    form.dateSelectionnee.value=date;
+    form.listeEtatsDeclarationsInfos.value=etat;
+    fcDoAction('AFFICHER_DECLARATIONS_BADGE');
+}
+
+function fcConsulterDBValideur(etat)
+{
+    form = document.formAction;
+	form.listeEtatsDeclarationsInfos.value=etat;
+    fcDoAction('actionListerDECLARATIONS_BADGE_VALIDEUR');
+}
+</script>
+<input type="hidden" name="listeEtatsDeclarationsInfos" id="listeEtatsDeclarationsInfos" value="" ><dl id="infosRequester" class="infos">
+		<dt>Déclarations de présence</dt>
+		<dd class="etatEnAttente">
+		</dd>
+		<dd class="etatAccepte">
+		<a href="javascript:fcConsulterDBDemandeur('6', '16/10/2019')">
+				77 validées</a>
+    	</dd>
+		<dd class="etatRefuse">
+		<a href="javascript:fcConsulterDBDemandeur('5', '25/12/2018')">
+				2 refusées</a>
+    	</dd>
+		<dd class="AutreEtat">
+		</dd>
+	</dl>
+<ul class="menu">
+		</ul>
+</td>
+    		</tr>
+    		</table>
+    </td>
+    <!-- Contenu : /declarebadge/contenu5120.jsp -->
+    <td width="*" align="center" valign="top">
+<table width="90%" class="contentZone">
+	<tr>
+		<td align="center">
+    <script language="JavaScript" type="text/javascript" src="/open/js/calendrier.1542042368000.js"></script><script language="JavaScript" type="text/javascript">
+function fcClearInput(id)
+{
+	var input = document.getElementById(id);
+	if (input)
+	{
+		input.value = "";
+	}
+}
+function fcSelectionnerAvecEntree(event)
+{
+   fcDoActionAvecEntree(event, 'RAFRAICHIR_DECLARATIONS_BADGE');
+}
+function fcSelectionnerDate(date)
+{
+    form = document.formAction;
+    form.dateSelectionnee.value = date;
+    form.offset.value = '0';
+    fcDoAction('RAFRAICHIR_DECLARATIONS_BADGE');
+}
+function fcChangerOffset(valeur)
+{
+    form = document.formAction;
+    form.offset.value = valeur;
+    fcDoAction('RAFRAICHIR_DECLARATIONS_BADGE');
+}
+function fcAjouterDeclaration(date)
+{
+    form = document.formAction;
+    form.dateSelectionnee.value = date;
+    fcDoAction('AJOUTER_DECLARATION_BADGE');
+}
+function fcEditerDeclaration(oidDeclaration)
+{
+    form = document.formAction;
+    form.declarationSelectionnee.value = oidDeclaration;
+    fcDoAction('EDITER_DECLARATION_BADGE');
+}
+function fcMasqueInviteSaisie(anInput)
+{
+	if (anInput != null && anInput.className == "disabled")
+	{
+		anInput.value = "";
+		anInput.className = "";
+	}
+}
+function fcAjouteInviteSaisie(anInput)
+{
+	if (anInput != null && anInput.value == "")
+	{
+		anInput.value = 'Saisissez votre commentaire ...';
+		anInput.className = "disabled";
+	}
+}
+function fcValiderDeclarations()
+{
+	fcValider();
+}
+function fcLostFocusDuree(input, aDate)
+{
+	if(input.value == null || input.value == "")
+	{
+		var vValue;
+		switch(aDate) 
+		{
+	    case 0:
+	    	vValue = '';
+	        break;
+	    case 1:
+	    	vValue = '';
+	        break;
+	    case 2:
+	    	vValue = '';
+	        break;
+	    case 3:
+	    	vValue = '';
+	        break;
+	    case 4:
+	    	vValue = '';
+	        break;
+	    case 5:
+	    	vValue = '';
+	        break;
+	    case 6:
+	    	vValue = '';
+	        break;
+	    default:
+	    	alert('this date is not supported : ' + aDate);
+	        break;
+		}	
+		input.value = vValue;
+	}
+}
+function fcChangeDuree(typePresenceAvecSignalement, isReposParDefautRespecte, idCompoReposRespecte, idCompoDureeDeclaree)
+{
+	if (isReposParDefautRespecte && !typePresenceAvecSignalement)
+	{
+		var vReposRespecteCkb = document.getElementById(idCompoReposRespecte);
+		var vDeclarationTxt = document.getElementById(idCompoDureeDeclaree);
+		if (vReposRespecteCkb != null && vDeclarationTxt != null)
+		{
+			vReposRespecteCkb.checked = vDeclarationTxt.value != '';
+		}
+	}
+}
+function fcCheckPresence(checkbox, idCompoDureeDeclaree, idObtentionDureeDeclaree, idCompoReposRespecte, isReposParDefautRespecte)
+{
+	if (isReposParDefautRespecte == 'true')
+	{
+		var vCompo = document.getElementById(idCompoReposRespecte);
+		if (vCompo != null)
+		{
+			vCompo.checked = checkbox.checked;
+		}
+	}
+	fcShowDureeDeclaree(checkbox, idCompoDureeDeclaree, idObtentionDureeDeclaree);
+}
+function fcShowDureeDeclaree(checkbox, idCompo, idObtention)
+{
+	var vCompo = document.getElementById(idCompo);
+	if (vCompo != null)
+	{
+		if (checkbox.checked)
+		{
+			vCompo.style.display="block";
+		}	
+		else
+		{
+			vCompo.style.display="none";
+		}
+	}
+	var vObtention = document.getElementById(idObtention);
+	if (vObtention != null)
+	{
+		if (checkbox.checked)
+		{
+			vObtention.style.display="block";
+		}	
+		else
+		{
+			vObtention.style.display="none";
+		}
+	}
+	var vImg = document.getElementById(idCompo+'_img');
+	if (vImg != null)
+	{
+		if (checkbox.checked)
+		{
+			vImg.style.display="block";
+		}	
+		else
+		{
+			vImg.style.display="none";
+		}
+	}
+}
+</script>
+
+<div id="helpDiv" class="help"></div>
+
+<input type="hidden" name="offset" id="offset" value="0" ><input type="hidden" name="declarationSelectionnee" id="declarationSelectionnee" value="" ><input type="hidden" name="nbBadgeages" id="nbBadgeages" value="4" ><table width="90%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><div name='message' class='messagesErreur'></div></td>
+  </tr>
+</table>
+<table width="90%" border="0" cellspacing="0" cellpadding="6">
+  <tr>
+    <td colspan="5">
+    	<input type="hidden" name="messageInfo" id="messageInfo" value="" ></td>
+  </tr>
+  <tr>
+    <td width="4%"  valign="middle"><img src="/open/img/puce.1350547314000.gif" height="13px" border="0" alt="" title=""/></td>
+    <td width="72%" valign="middle" align="left" class="filtre">Afficher les déclarations de la semaine du :</td>
+    <td width="16%" valign="middle" align="right"><input type="text" name="dateSelectionnee" id="dateSelectionnee" value="18&#x2f;10&#x2f;2019" size='10' onKeyPress='fcSelectionnerAvecEntree(event)' tabIndex='1'></td>
+    <td width="6%"  valign="middle" align="left"><a class='so-BtnLink' href='javascript: void(0);' alt="Calendrier" title="Calendrier" onClick="openCalendar('/open/include/calendrier.html', document.formAction.dateSelectionnee,'IMG_1', new Array('janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'), new Array('Di','Lu','Ma','Me','Je','Ve','Sa'),1,'dd/MM/yyyy','null','null')"><img align="absmiddle" border="0" name="IMG_1" alt="Calendrier" title="Calendrier" src="/open/img/calendar.1452099624000.png"></a></td>
+    <td width="2%"  valign="middle" align="right"><a href="javascript:fcDoAction('RAFRAICHIR_DECLARATIONS_BADGE')"><img border="0" src="/open/img/OK.1350547314000.png" alt="Exécuter" title="Exécuter"></a></td>
+  </tr>
+</table>
+<table width="90%" class="bordered">
+  <tr>
+    <td colspan="15" class="tdCalSemaine2 bordered" valign="middle" height="30">
+<a title="Semaine précédente (07/10/2019)" href="javascript:fcSelectionnerDate('07/10/2019')"><img border="0" src="/open/img/navLeft.1350547314000.png" height="13px" alt="Semaine précédente (07/10/2019)" title="Semaine précédente (07/10/2019)"></a>
+    Semaine 42<a title="Semaine suivante (21/10/2019)" href="javascript:fcSelectionnerDate('21/10/2019')"><img border="0" src="/open/img/navRight.1350547314000.png" height="13px" style="vertical-align: middle" alt="Semaine suivante (21/10/2019)" title="Semaine suivante (21/10/2019)"></a>
+    </td>
+  </tr>
+  <tr>
+<th class="tabTitre tabTitreFirst" width="2%">&nbsp;</th>
+<th width="13"  class="tabTitre">&nbsp;</th>
+    <th width="10%" class="tabTitre">Jour</th>
+<th width="16"  class="tabTitre"><img border="0" src="/open/img/vide.1350547314000.gif" height="1" width="16" alt=""></th>
+<th width="100px" class="tabTitre">1</th>
+    <th width="100px" class="tabTitre">2</th>
+    <th width="100px" class="tabTitre">3</th>
+    <th width="100px" class="tabTitre">4</th>
+<th width="16"  class="tabTitre"><img border="0" src="/open/img/vide.1350547314000.gif" height="1" width="16" alt=""></th>
+<th width="26" class="tabTitre">Abs.</th>
+    <th width="16" class="tabTitre">&nbsp;</th>
+<th width="10%" class="tabTitre">État</th>
+    <th width="20%" class="tabTitre">Valideur</th>
+    <th width="10%" class="tabTitre">Validation</th>
+</tr>
+<tr align="center" height="25">
+<td class="tabPair" rowspan="2">
+			&nbsp;
+</td>
+<td height="30" class="tabPair" rowspan="2">
+    	<a href="javascript:fcAjouterDeclaration('14/10/2019')" class="lien12"><div class="etatGtp">
+    		&nbsp;Lu&nbsp;
+    	</div>
+    	</a><input type="hidden" name="oidDeclaration_14/10/2019" id="oidDeclaration_14/10/2019" value="" ></td>
+    <td class="tabPair" rowspan="2"><a href="javascript:fcAjouterDeclaration('14/10/2019')" class="lien12"><div class="etatGtp">14/10/2019</div></a></td>
+    <td class="tabPair" rowspan="2"><a href="javascript:fcChangerOffset(-4)"><img name="imageMoins" id="imageMoins" src="/open/img/vide.1350547314000.gif" border="0"  alt="" title=""  ></a></td>
+    <td class="tabPair" colspan="1">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	
+	          <td width="*" align="center" valign="middle">
+	          	<a href="javascript:fcAjouterDeclaration('14/10/2019')" class="lien12"><span class="etatGtp">
+	          			<div class="inputNonModifiable">06&#x3a;04</div><input type="hidden" name="14/10/2019_heure1" id="14/10/2019_heure1" value="06&#x3a;04" size='5' onKeyPress='fcAppuiTouche(event)' tabIndex='2'></span>
+	          	</a></td>
+	          <td class="tabPair" align="center" width="16">
+	          	<img name="14/10/2019_image1" id="14/10/2019_image1" src="/open/images/badgeage/icn_badgeage_from_intranet.1550136565283.png" border="0"  alt="Présence intranet" title="Présence intranet"  ></td>
+	          <script language="JavaScript" type="text/javascript">
+              			</script>
+			  </tr>
+	      </table>
+	    </td>
+	<input type="hidden" name="14/10/2019" id="14/10/2019" value="14&#x2f;10&#x2f;2019" ><input type="hidden" name="14/10/2019_1" id="14/10/2019_1" value="" ><input type="hidden" name="14/10/2019_oidOrigine1" id="14/10/2019_oidOrigine1" value="4878434" ><input type='hidden' name='14/10/2019_heure1' value='06:04'>
+			  <input type="hidden" name="14/10/2019_mission1" id="14/10/2019_mission1" value="" ><input type="hidden" name="14/10/2019_image1" id="14/10/2019_image1" value="images&#x2f;badgeage&#x2f;icn_badgeage_from_intranet.png" ><input type="hidden" name="14/10/2019_modifiable1" id="14/10/2019_modifiable1" value="false" ><input type="hidden" name="14/10/2019_61" id="14/10/2019_61" value="0" ><td class="tabPair" colspan="1">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	
+	          <td width="*" align="center" valign="middle">
+	          	<a href="javascript:fcAjouterDeclaration('14/10/2019')" class="lien12"><span class="etatGtp">
+	          			<div class="inputNonModifiable">11&#x3a;06</div><input type="hidden" name="14/10/2019_heure2" id="14/10/2019_heure2" value="11&#x3a;06" size='5' onKeyPress='fcAppuiTouche(event)' tabIndex='3'></span>
+	          	</a></td>
+	          <td class="tabPair" align="center" width="16">
+	          	<img name="14/10/2019_image2" id="14/10/2019_image2" src="/open/images/badgeage/icn_badgeage_from_intranet.1550136565283.png" border="0"  alt="Présence intranet" title="Présence intranet"  ></td>
+	          <script language="JavaScript" type="text/javascript">
+              			</script>
+			  </tr>
+	      </table>
+	    </td>
+	<input type="hidden" name="14/10/2019" id="14/10/2019" value="14&#x2f;10&#x2f;2019" ><input type="hidden" name="14/10/2019_2" id="14/10/2019_2" value="" ><input type="hidden" name="14/10/2019_oidOrigine2" id="14/10/2019_oidOrigine2" value="4879022" ><input type='hidden' name='14/10/2019_heure2' value='11:06'>
+			  <input type="hidden" name="14/10/2019_mission2" id="14/10/2019_mission2" value="" ><input type="hidden" name="14/10/2019_image2" id="14/10/2019_image2" value="images&#x2f;badgeage&#x2f;icn_badgeage_from_intranet.png" ><input type="hidden" name="14/10/2019_modifiable2" id="14/10/2019_modifiable2" value="false" ><input type="hidden" name="14/10/2019_62" id="14/10/2019_62" value="0" ><td class="tabPair" colspan="1">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	
+	          <td width="*" align="center" valign="middle">
+	          	<a href="javascript:fcAjouterDeclaration('14/10/2019')" class="lien12"><span class="etatGtp">
+	          			<div class="inputNonModifiable">11&#x3a;49</div><input type="hidden" name="14/10/2019_heure3" id="14/10/2019_heure3" value="11&#x3a;49" size='5' onKeyPress='fcAppuiTouche(event)' tabIndex='4'></span>
+	          	</a></td>
+	          <td class="tabPair" align="center" width="16">
+	          	<img name="14/10/2019_image3" id="14/10/2019_image3" src="/open/images/badgeage/icn_badgeage_from_intranet.1550136565283.png" border="0"  alt="Présence intranet" title="Présence intranet"  ></td>
+	          <script language="JavaScript" type="text/javascript">
+              			</script>
+			  </tr>
+	      </table>
+	    </td>
+	<input type="hidden" name="14/10/2019" id="14/10/2019" value="14&#x2f;10&#x2f;2019" ><input type="hidden" name="14/10/2019_3" id="14/10/2019_3" value="" ><input type="hidden" name="14/10/2019_oidOrigine3" id="14/10/2019_oidOrigine3" value="4879178" ><input type='hidden' name='14/10/2019_heure3' value='11:49'>
+			  <input type="hidden" name="14/10/2019_mission3" id="14/10/2019_mission3" value="" ><input type="hidden" name="14/10/2019_image3" id="14/10/2019_image3" value="images&#x2f;badgeage&#x2f;icn_badgeage_from_intranet.png" ><input type="hidden" name="14/10/2019_modifiable3" id="14/10/2019_modifiable3" value="false" ><input type="hidden" name="14/10/2019_63" id="14/10/2019_63" value="0" ><td class="tabPair" colspan="1">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	
+	          <td width="*" align="center" valign="middle">
+	          	<a href="javascript:fcAjouterDeclaration('14/10/2019')" class="lien12"><span class="etatGtp">
+	          			<div class="inputNonModifiable">14&#x3a;00</div><input type="hidden" name="14/10/2019_heure4" id="14/10/2019_heure4" value="14&#x3a;00" size='5' onKeyPress='fcAppuiTouche(event)' tabIndex='5'></span>
+	          	</a></td>
+	          <td class="tabPair" align="center" width="16">
+	          	<img name="14/10/2019_image4" id="14/10/2019_image4" src="/open/images/badgeage/icn_badgeage_from_intranet.1550136565283.png" border="0"  alt="Présence intranet" title="Présence intranet"  ></td>
+	          <script language="JavaScript" type="text/javascript">
+              			</script>
+			  </tr>
+	      </table>
+	    </td>
+	<input type="hidden" name="14/10/2019" id="14/10/2019" value="14&#x2f;10&#x2f;2019" ><input type="hidden" name="14/10/2019_4" id="14/10/2019_4" value="" ><input type="hidden" name="14/10/2019_oidOrigine4" id="14/10/2019_oidOrigine4" value="4879947" ><input type='hidden' name='14/10/2019_heure4' value='14:00'>
+			  <input type="hidden" name="14/10/2019_mission4" id="14/10/2019_mission4" value="" ><input type="hidden" name="14/10/2019_image4" id="14/10/2019_image4" value="images&#x2f;badgeage&#x2f;icn_badgeage_from_intranet.png" ><input type="hidden" name="14/10/2019_modifiable4" id="14/10/2019_modifiable4" value="false" ><input type="hidden" name="14/10/2019_64" id="14/10/2019_64" value="0" ><td class="tabPair" rowspan="2">
+      <table border='0' cellspacing='0' cellpadding='0'>
+        <tr>
+          <td>
+            <a href="javascript:fcChangerOffset(4)"><img name="imagePlus" id="imagePlus" src="/open/img/crayon.1452099624000.png" border="0"  alt="" title=""  align='absmiddle'></a>
+          </td>
+          <td>
+            <img border="0" src="/open/img/vide.1350547314000.gif" height="30" width="1" alt=""></td>
+        </tr>
+      </table>
+      </td>
+    <td class="tabPair" rowspan="2"><a href="javascript:fcAjouterDeclaration('14/10/2019')" class="lien12"><img name="imageAbsence" id="imageAbsence" src="/open/img/vide.1350547314000.gif" border="0"  alt="" title=""  ></a></td>
+    <td class="tabPair" rowspan="2"></td>
+    <td class="tabPair"><a href="javascript:fcAjouterDeclaration('14/10/2019')" class="lien12"><div class="etatGtp">&nbsp;</div></a></td>
+    <td class="tabPair"><a href="javascript:fcAjouterDeclaration('14/10/2019')" class="lien12"><div class="etatGtp">&nbsp;</div></a></td>
+    <td class="tabPair"><a href="javascript:fcAjouterDeclaration('14/10/2019')" class="lien12"><div class="etatGtp">&nbsp;</div></a></td>
+</tr>
+  <tr height="25">
+  	<td colspan="4" class="tabPair">
+ 	<table cellpadding="0" cellspacing="0">
+ 			<tr>
+ 				<td valign="middle" width="20px" class="tabPair">
+		 			<img border="0" src="/open/img/commentaire.1452099624000.png" height="16" alt="Commentaire du demandeur" title="Commentaire du demandeur"></td>
+		 		<td class="tabPair">
+				<input type="text" name="commentaireDemandeur_14/10/2019" id="commentaireDemandeur_14/10/2019" value="" class="disabled" size="50" onKeyPress="fcAppuiTouche(event)" onfocus="fcMasqueInviteSaisie(this);" onblur="fcAjouteInviteSaisie(this);" tabIndex='6'><script type="text/javascript">
+						fcAjouteInviteSaisie(document.getElementById("commentaireDemandeur_14/10/2019"));
+					</script>
+				</td>
+			</tr>
+		</table>
+	</td>
+<td colspan="3" class="tabPair">
+  		</td>
+    </tr>
+  <tr align="center" height="25">
+<td class="tabImpair" rowspan="2">
+			&nbsp;
+</td>
+<td height="30" class="tabImpair" rowspan="2">
+    	<a href="javascript:fcAjouterDeclaration('15/10/2019')" class="lien12"><div class="etatGtp">
+    		&nbsp;Ma&nbsp;
+    	</div>
+    	</a><input type="hidden" name="oidDeclaration_15/10/2019" id="oidDeclaration_15/10/2019" value="" ></td>
+    <td class="tabImpair" rowspan="2"><a href="javascript:fcAjouterDeclaration('15/10/2019')" class="lien12"><div class="etatGtp">15/10/2019</div></a></td>
+    <td class="tabImpair" rowspan="2"><a href="javascript:fcChangerOffset(-4)"><img name="imageMoins" id="imageMoins" src="/open/img/vide.1350547314000.gif" border="0"  alt="" title=""  ></a></td>
+    <td class="tabImpair" colspan="1">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	
+	          <td width="*" align="center" valign="middle">
+	          	<a href="javascript:fcAjouterDeclaration('15/10/2019')" class="lien12"><span class="etatGtp">
+	          			<div class="inputNonModifiable">06&#x3a;01</div><input type="hidden" name="15/10/2019_heure1" id="15/10/2019_heure1" value="06&#x3a;01" size='5' onKeyPress='fcAppuiTouche(event)' tabIndex='7'></span>
+	          	</a></td>
+	          <td class="tabImpair" align="center" width="16">
+	          	<img name="15/10/2019_image1" id="15/10/2019_image1" src="/open/images/badgeage/icn_badgeage_from_intranet.1550136565283.png" border="0"  alt="Présence intranet" title="Présence intranet"  ></td>
+	          <script language="JavaScript" type="text/javascript">
+              			</script>
+			  </tr>
+	      </table>
+	    </td>
+	<input type="hidden" name="15/10/2019" id="15/10/2019" value="15&#x2f;10&#x2f;2019" ><input type="hidden" name="15/10/2019_1" id="15/10/2019_1" value="" ><input type="hidden" name="15/10/2019_oidOrigine1" id="15/10/2019_oidOrigine1" value="4881659" ><input type='hidden' name='15/10/2019_heure1' value='06:01'>
+			  <input type="hidden" name="15/10/2019_mission1" id="15/10/2019_mission1" value="" ><input type="hidden" name="15/10/2019_image1" id="15/10/2019_image1" value="images&#x2f;badgeage&#x2f;icn_badgeage_from_intranet.png" ><input type="hidden" name="15/10/2019_modifiable1" id="15/10/2019_modifiable1" value="false" ><input type="hidden" name="15/10/2019_61" id="15/10/2019_61" value="0" ><td class="tabImpair" colspan="1">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	
+	          <td width="*" align="center" valign="middle">
+	          	<a href="javascript:fcAjouterDeclaration('15/10/2019')" class="lien12"><span class="etatGtp">
+	          			<div class="inputNonModifiable">11&#x3a;35</div><input type="hidden" name="15/10/2019_heure2" id="15/10/2019_heure2" value="11&#x3a;35" size='5' onKeyPress='fcAppuiTouche(event)' tabIndex='8'></span>
+	          	</a></td>
+	          <td class="tabImpair" align="center" width="16">
+	          	<img name="15/10/2019_image2" id="15/10/2019_image2" src="/open/images/badgeage/icn_badgeage_from_intranet.1550136565283.png" border="0"  alt="Présence intranet" title="Présence intranet"  ></td>
+	          <script language="JavaScript" type="text/javascript">
+              			</script>
+			  </tr>
+	      </table>
+	    </td>
+	<input type="hidden" name="15/10/2019" id="15/10/2019" value="15&#x2f;10&#x2f;2019" ><input type="hidden" name="15/10/2019_2" id="15/10/2019_2" value="" ><input type="hidden" name="15/10/2019_oidOrigine2" id="15/10/2019_oidOrigine2" value="4882073" ><input type='hidden' name='15/10/2019_heure2' value='11:35'>
+			  <input type="hidden" name="15/10/2019_mission2" id="15/10/2019_mission2" value="" ><input type="hidden" name="15/10/2019_image2" id="15/10/2019_image2" value="images&#x2f;badgeage&#x2f;icn_badgeage_from_intranet.png" ><input type="hidden" name="15/10/2019_modifiable2" id="15/10/2019_modifiable2" value="false" ><input type="hidden" name="15/10/2019_62" id="15/10/2019_62" value="0" ><td class="tabImpair" colspan="1">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	
+	          <td width="*" align="center" valign="middle">
+	          	<a href="javascript:fcAjouterDeclaration('15/10/2019')" class="lien12"><span class="etatGtp">
+	          			<div class="inputNonModifiable">12&#x3a;18</div><input type="hidden" name="15/10/2019_heure3" id="15/10/2019_heure3" value="12&#x3a;18" size='5' onKeyPress='fcAppuiTouche(event)' tabIndex='9'></span>
+	          	</a></td>
+	          <td class="tabImpair" align="center" width="16">
+	          	<img name="15/10/2019_image3" id="15/10/2019_image3" src="/open/images/badgeage/icn_badgeage_from_intranet.1550136565283.png" border="0"  alt="Présence intranet" title="Présence intranet"  ></td>
+	          <script language="JavaScript" type="text/javascript">
+              			</script>
+			  </tr>
+	      </table>
+	    </td>
+	<input type="hidden" name="15/10/2019" id="15/10/2019" value="15&#x2f;10&#x2f;2019" ><input type="hidden" name="15/10/2019_3" id="15/10/2019_3" value="" ><input type="hidden" name="15/10/2019_oidOrigine3" id="15/10/2019_oidOrigine3" value="4882232" ><input type='hidden' name='15/10/2019_heure3' value='12:18'>
+			  <input type="hidden" name="15/10/2019_mission3" id="15/10/2019_mission3" value="" ><input type="hidden" name="15/10/2019_image3" id="15/10/2019_image3" value="images&#x2f;badgeage&#x2f;icn_badgeage_from_intranet.png" ><input type="hidden" name="15/10/2019_modifiable3" id="15/10/2019_modifiable3" value="false" ><input type="hidden" name="15/10/2019_63" id="15/10/2019_63" value="0" ><td class="tabImpair" colspan="1">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	
+	          <td width="*" align="center" valign="middle">
+	          	<a href="javascript:fcAjouterDeclaration('15/10/2019')" class="lien12"><span class="etatGtp">
+	          			<div class="inputNonModifiable">14&#x3a;02</div><input type="hidden" name="15/10/2019_heure4" id="15/10/2019_heure4" value="14&#x3a;02" size='5' onKeyPress='fcAppuiTouche(event)' tabIndex='10'></span>
+	          	</a></td>
+	          <td class="tabImpair" align="center" width="16">
+	          	<img name="15/10/2019_image4" id="15/10/2019_image4" src="/open/images/badgeage/icn_badgeage_from_intranet.1550136565283.png" border="0"  alt="Présence intranet" title="Présence intranet"  ></td>
+	          <script language="JavaScript" type="text/javascript">
+              			</script>
+			  </tr>
+	      </table>
+	    </td>
+	<input type="hidden" name="15/10/2019" id="15/10/2019" value="15&#x2f;10&#x2f;2019" ><input type="hidden" name="15/10/2019_4" id="15/10/2019_4" value="" ><input type="hidden" name="15/10/2019_oidOrigine4" id="15/10/2019_oidOrigine4" value="4882848" ><input type='hidden' name='15/10/2019_heure4' value='14:02'>
+			  <input type="hidden" name="15/10/2019_mission4" id="15/10/2019_mission4" value="" ><input type="hidden" name="15/10/2019_image4" id="15/10/2019_image4" value="images&#x2f;badgeage&#x2f;icn_badgeage_from_intranet.png" ><input type="hidden" name="15/10/2019_modifiable4" id="15/10/2019_modifiable4" value="false" ><input type="hidden" name="15/10/2019_64" id="15/10/2019_64" value="0" ><td class="tabImpair" rowspan="2">
+      <table border='0' cellspacing='0' cellpadding='0'>
+        <tr>
+          <td>
+            <a href="javascript:fcChangerOffset(4)"><img name="imagePlus" id="imagePlus" src="/open/img/crayon.1452099624000.png" border="0"  alt="" title=""  align='absmiddle'></a>
+          </td>
+          <td>
+            <img border="0" src="/open/img/vide.1350547314000.gif" height="30" width="1" alt=""></td>
+        </tr>
+      </table>
+      </td>
+    <td class="tabImpair" rowspan="2"><a href="javascript:fcAjouterDeclaration('15/10/2019')" class="lien12"><img name="imageAbsence" id="imageAbsence" src="/open/img/vide.1350547314000.gif" border="0"  alt="" title=""  ></a></td>
+    <td class="tabImpair" rowspan="2"></td>
+    <td class="tabImpair"><a href="javascript:fcAjouterDeclaration('15/10/2019')" class="lien12"><div class="etatGtp">&nbsp;</div></a></td>
+    <td class="tabImpair"><a href="javascript:fcAjouterDeclaration('15/10/2019')" class="lien12"><div class="etatGtp">&nbsp;</div></a></td>
+    <td class="tabImpair"><a href="javascript:fcAjouterDeclaration('15/10/2019')" class="lien12"><div class="etatGtp">&nbsp;</div></a></td>
+</tr>
+  <tr height="25">
+  	<td colspan="4" class="tabImpair">
+ 	<table cellpadding="0" cellspacing="0">
+ 			<tr>
+ 				<td valign="middle" width="20px" class="tabImpair">
+		 			<img border="0" src="/open/img/commentaire.1452099624000.png" height="16" alt="Commentaire du demandeur" title="Commentaire du demandeur"></td>
+		 		<td class="tabImpair">
+				<input type="text" name="commentaireDemandeur_15/10/2019" id="commentaireDemandeur_15/10/2019" value="" class="disabled" size="50" onKeyPress="fcAppuiTouche(event)" onfocus="fcMasqueInviteSaisie(this);" onblur="fcAjouteInviteSaisie(this);" tabIndex='11'><script type="text/javascript">
+						fcAjouteInviteSaisie(document.getElementById("commentaireDemandeur_15/10/2019"));
+					</script>
+				</td>
+			</tr>
+		</table>
+	</td>
+<td colspan="3" class="tabImpair">
+  		</td>
+    </tr>
+  <tr align="center" height="25">
+<td class="tabPair" rowspan="2">
+<a href="mailto:jeremy.henno@itga.fr">
+				<img name="mailTo" id="mailTo" src="/open/img/email.1452099624000.png" border="0"  alt="" title=""  ></a>
+</td>
+<td height="30" class="tabPair" rowspan="2">
+    	<a href="javascript:fcEditerDeclaration('333007')" class="lien12"><div class="etatAccepte">
+    		&nbsp;Me&nbsp;
+    	</div>
+    	</a><input type="hidden" name="oidDeclaration_16/10/2019" id="oidDeclaration_16/10/2019" value="333007" ></td>
+    <td class="tabPair" rowspan="2"><a href="javascript:fcEditerDeclaration('333007')" class="lien12"><div class="etatAccepte">16/10/2019</div></a></td>
+    <td class="tabPair" rowspan="2"><a href="javascript:fcChangerOffset(-4)"><img name="imageMoins" id="imageMoins" src="/open/img/vide.1350547314000.gif" border="0"  alt="" title=""  ></a></td>
+    <td class="tabPair" colspan="1">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	
+	          <td width="*" align="center" valign="middle">
+	          	<a href="javascript:fcEditerDeclaration('333007')" class="lien12"><span class="etatAccepte">
+	          			<div class="inputNonModifiable">05&#x3a;58</div><input type="hidden" name="16/10/2019_heure1" id="16/10/2019_heure1" value="05&#x3a;58" size='5' onKeyPress='fcAppuiTouche(event)' tabIndex='12'></span>
+	          	</a></td>
+	          <td class="tabPair" align="center" width="16">
+	          	<img name="16/10/2019_image1" id="16/10/2019_image1" src="/open/images/badgeage/icn_badgeage_from_intranet.1550136565283.png" border="0"  alt="Présence intranet" title="Présence intranet"  ></td>
+	          <script language="JavaScript" type="text/javascript">
+              			</script>
+			  </tr>
+	      </table>
+	    </td>
+	<input type="hidden" name="16/10/2019" id="16/10/2019" value="16&#x2f;10&#x2f;2019" ><input type="hidden" name="16/10/2019_1" id="16/10/2019_1" value="" ><input type="hidden" name="16/10/2019_oidOrigine1" id="16/10/2019_oidOrigine1" value="4884650" ><input type='hidden' name='16/10/2019_heure1' value='05:58'>
+			  <input type="hidden" name="16/10/2019_mission1" id="16/10/2019_mission1" value="" ><input type="hidden" name="16/10/2019_image1" id="16/10/2019_image1" value="images&#x2f;badgeage&#x2f;icn_badgeage_from_intranet.png" ><input type="hidden" name="16/10/2019_modifiable1" id="16/10/2019_modifiable1" value="false" ><input type="hidden" name="16/10/2019_61" id="16/10/2019_61" value="7" ><td class="tabPair" colspan="1">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	
+	          <td width="*" align="center" valign="middle">
+	          	<span class="etatAccepte">
+	          			<input type="text" name="16/10/2019_heure2" id="16/10/2019_heure2" value="11&#x3a;58" size='5' onKeyPress='fcAppuiTouche(event)' tabIndex='13'><img border="0" src="/open/img/delete.1452099624000.png" height="12" width="12" style="cursor: pointer;" onclick="fcClearInput( "16/10/2019_heure2")" alt=""></span>
+	          	</td>
+	          <td class="tabPair" align="center" width="16">
+	          	<img name="16/10/2019_image2" id="16/10/2019_image2" src="/open/images/badgeage/icn_badgeage_from_declaration_validated.1550136565283.png" border="0"  alt="" title=""  ></td>
+	          <script language="JavaScript" type="text/javascript">
+              			</script>
+			  </tr>
+	      </table>
+	    </td>
+	<input type="hidden" name="16/10/2019" id="16/10/2019" value="16&#x2f;10&#x2f;2019" ><input type="hidden" name="16/10/2019_2" id="16/10/2019_2" value="" ><input type="hidden" name="16/10/2019_oidOrigine2" id="16/10/2019_oidOrigine2" value="4887567" ><input type='hidden' name='16/10/2019_heure2' value='11:58'>
+			  <input type="hidden" name="16/10/2019_mission2" id="16/10/2019_mission2" value="" ><input type="hidden" name="16/10/2019_image2" id="16/10/2019_image2" value="images&#x2f;badgeage&#x2f;icn_badgeage_from_declaration_validated.png" ><input type="hidden" name="16/10/2019_modifiable2" id="16/10/2019_modifiable2" value="true" ><input type="hidden" name="16/10/2019_62" id="16/10/2019_62" value="8" ><td class="tabPair" colspan="1">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	
+	          <td width="*" align="center" valign="middle">
+	          	<a href="javascript:fcEditerDeclaration('333007')" class="lien12"><span class="etatAccepte">
+	          			<div class="inputNonModifiable">12&#x3a;42</div><input type="hidden" name="16/10/2019_heure3" id="16/10/2019_heure3" value="12&#x3a;42" size='5' onKeyPress='fcAppuiTouche(event)' tabIndex='14'></span>
+	          	</a></td>
+	          <td class="tabPair" align="center" width="16">
+	          	<img name="16/10/2019_image3" id="16/10/2019_image3" src="/open/images/badgeage/icn_badgeage_from_intranet.1550136565283.png" border="0"  alt="Présence intranet" title="Présence intranet"  ></td>
+	          <script language="JavaScript" type="text/javascript">
+              			</script>
+			  </tr>
+	      </table>
+	    </td>
+	<input type="hidden" name="16/10/2019" id="16/10/2019" value="16&#x2f;10&#x2f;2019" ><input type="hidden" name="16/10/2019_3" id="16/10/2019_3" value="" ><input type="hidden" name="16/10/2019_oidOrigine3" id="16/10/2019_oidOrigine3" value="4885351" ><input type='hidden' name='16/10/2019_heure3' value='12:42'>
+			  <input type="hidden" name="16/10/2019_mission3" id="16/10/2019_mission3" value="" ><input type="hidden" name="16/10/2019_image3" id="16/10/2019_image3" value="images&#x2f;badgeage&#x2f;icn_badgeage_from_intranet.png" ><input type="hidden" name="16/10/2019_modifiable3" id="16/10/2019_modifiable3" value="false" ><input type="hidden" name="16/10/2019_63" id="16/10/2019_63" value="7" ><td class="tabPair" colspan="1">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	
+	          <td width="*" align="center" valign="middle">
+	          	<a href="javascript:fcEditerDeclaration('333007')" class="lien12"><span class="etatAccepte">
+	          			<div class="inputNonModifiable">13&#x3a;58</div><input type="hidden" name="16/10/2019_heure4" id="16/10/2019_heure4" value="13&#x3a;58" size='5' onKeyPress='fcAppuiTouche(event)' tabIndex='15'></span>
+	          	</a></td>
+	          <td class="tabPair" align="center" width="16">
+	          	<img name="16/10/2019_image4" id="16/10/2019_image4" src="/open/images/badgeage/icn_badgeage_from_intranet.1550136565283.png" border="0"  alt="Présence intranet" title="Présence intranet"  ></td>
+	          <script language="JavaScript" type="text/javascript">
+              			</script>
+			  </tr>
+	      </table>
+	    </td>
+	<input type="hidden" name="16/10/2019" id="16/10/2019" value="16&#x2f;10&#x2f;2019" ><input type="hidden" name="16/10/2019_4" id="16/10/2019_4" value="" ><input type="hidden" name="16/10/2019_oidOrigine4" id="16/10/2019_oidOrigine4" value="4885748" ><input type='hidden' name='16/10/2019_heure4' value='13:58'>
+			  <input type="hidden" name="16/10/2019_mission4" id="16/10/2019_mission4" value="" ><input type="hidden" name="16/10/2019_image4" id="16/10/2019_image4" value="images&#x2f;badgeage&#x2f;icn_badgeage_from_intranet.png" ><input type="hidden" name="16/10/2019_modifiable4" id="16/10/2019_modifiable4" value="false" ><input type="hidden" name="16/10/2019_64" id="16/10/2019_64" value="7" ><td class="tabPair" rowspan="2">
+      <table border='0' cellspacing='0' cellpadding='0'>
+        <tr>
+          <td>
+            <a href="javascript:fcChangerOffset(4)"><img name="imagePlus" id="imagePlus" src="/open/img/crayon.1452099624000.png" border="0"  alt="" title=""  align='absmiddle'></a>
+          </td>
+          <td>
+            <img border="0" src="/open/img/vide.1350547314000.gif" height="30" width="1" alt=""></td>
+        </tr>
+      </table>
+      </td>
+    <td class="tabPair" rowspan="2"><a href="javascript:fcEditerDeclaration('333007')" class="lien12"><img name="imageAbsence" id="imageAbsence" src="/open/img/vide.1350547314000.gif" border="0"  alt="" title=""  ></a></td>
+    <td class="tabPair" rowspan="2"></td>
+    <td class="tabPair"><a href="javascript:fcEditerDeclaration('333007')" class="lien12"><div class="etatAccepte">Validée</div></a></td>
+    <td class="tabPair"><a href="javascript:fcEditerDeclaration('333007')" class="lien12"><div class="etatAccepte">HENNO Jérémy</div></a></td>
+    <td class="tabPair"><a href="javascript:fcEditerDeclaration('333007')" class="lien12"><div class="etatAccepte">17/10/2019</div></a></td>
+</tr>
+  <tr height="25">
+  	<td colspan="4" class="tabPair">
+ 	<table cellpadding="0" cellspacing="0">
+ 			<tr>
+ 				<td valign="middle" width="20px" class="tabPair">
+		 			<img border="0" src="/open/img/commentaire.1452099624000.png" height="16" alt="Commentaire du demandeur" title="Commentaire du demandeur"></td>
+		 		<td class="tabPair">
+				<input type="text" name="commentaireDemandeur_16/10/2019" id="commentaireDemandeur_16/10/2019" value="" class="disabled" size="50" onKeyPress="fcAppuiTouche(event)" onfocus="fcMasqueInviteSaisie(this);" onblur="fcAjouteInviteSaisie(this);" tabIndex='16'><script type="text/javascript">
+						fcAjouteInviteSaisie(document.getElementById("commentaireDemandeur_16/10/2019"));
+					</script>
+				</td>
+			</tr>
+		</table>
+	</td>
+<td colspan="3" class="tabPair">
+  		</td>
+    </tr>
+  <tr align="center" height="25">
+<td class="tabImpair" rowspan="2">
+			&nbsp;
+</td>
+<td height="30" class="tabImpair" rowspan="2">
+    	<a href="javascript:fcAjouterDeclaration('17/10/2019')" class="lien12"><div class="etatGtp">
+    		&nbsp;Je&nbsp;
+    	</div>
+    	</a><input type="hidden" name="oidDeclaration_17/10/2019" id="oidDeclaration_17/10/2019" value="" ></td>
+    <td class="tabImpair" rowspan="2"><a href="javascript:fcAjouterDeclaration('17/10/2019')" class="lien12"><div class="etatGtp">17/10/2019</div></a></td>
+    <td class="tabImpair" rowspan="2"><a href="javascript:fcChangerOffset(-4)"><img name="imageMoins" id="imageMoins" src="/open/img/vide.1350547314000.gif" border="0"  alt="" title=""  ></a></td>
+    <td class="tabImpair" colspan="1">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	
+	          <td width="*" align="center" valign="middle">
+	          	<a href="javascript:fcAjouterDeclaration('17/10/2019')" class="lien12"><span class="etatGtp">
+	          			<div class="inputNonModifiable">06&#x3a;00</div><input type="hidden" name="17/10/2019_heure1" id="17/10/2019_heure1" value="06&#x3a;00" size='5' onKeyPress='fcAppuiTouche(event)' tabIndex='17'></span>
+	          	</a></td>
+	          <td class="tabImpair" align="center" width="16">
+	          	<img name="17/10/2019_image1" id="17/10/2019_image1" src="/open/images/badgeage/icn_badgeage_from_intranet.1550136565283.png" border="0"  alt="Présence intranet" title="Présence intranet"  ></td>
+	          <script language="JavaScript" type="text/javascript">
+              			</script>
+			  </tr>
+	      </table>
+	    </td>
+	<input type="hidden" name="17/10/2019" id="17/10/2019" value="17&#x2f;10&#x2f;2019" ><input type="hidden" name="17/10/2019_1" id="17/10/2019_1" value="" ><input type="hidden" name="17/10/2019_oidOrigine1" id="17/10/2019_oidOrigine1" value="4887490" ><input type='hidden' name='17/10/2019_heure1' value='06:00'>
+			  <input type="hidden" name="17/10/2019_mission1" id="17/10/2019_mission1" value="" ><input type="hidden" name="17/10/2019_image1" id="17/10/2019_image1" value="images&#x2f;badgeage&#x2f;icn_badgeage_from_intranet.png" ><input type="hidden" name="17/10/2019_modifiable1" id="17/10/2019_modifiable1" value="false" ><input type="hidden" name="17/10/2019_61" id="17/10/2019_61" value="0" ><td class="tabImpair" colspan="1">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	
+	          <td width="*" align="center" valign="middle">
+	          	<a href="javascript:fcAjouterDeclaration('17/10/2019')" class="lien12"><span class="etatGtp">
+	          			<div class="inputNonModifiable">11&#x3a;56</div><input type="hidden" name="17/10/2019_heure2" id="17/10/2019_heure2" value="11&#x3a;56" size='5' onKeyPress='fcAppuiTouche(event)' tabIndex='18'></span>
+	          	</a></td>
+	          <td class="tabImpair" align="center" width="16">
+	          	<img name="17/10/2019_image2" id="17/10/2019_image2" src="/open/images/badgeage/icn_badgeage_from_intranet.1550136565283.png" border="0"  alt="Présence intranet" title="Présence intranet"  ></td>
+	          <script language="JavaScript" type="text/javascript">
+              			</script>
+			  </tr>
+	      </table>
+	    </td>
+	<input type="hidden" name="17/10/2019" id="17/10/2019" value="17&#x2f;10&#x2f;2019" ><input type="hidden" name="17/10/2019_2" id="17/10/2019_2" value="" ><input type="hidden" name="17/10/2019_oidOrigine2" id="17/10/2019_oidOrigine2" value="4888107" ><input type='hidden' name='17/10/2019_heure2' value='11:56'>
+			  <input type="hidden" name="17/10/2019_mission2" id="17/10/2019_mission2" value="" ><input type="hidden" name="17/10/2019_image2" id="17/10/2019_image2" value="images&#x2f;badgeage&#x2f;icn_badgeage_from_intranet.png" ><input type="hidden" name="17/10/2019_modifiable2" id="17/10/2019_modifiable2" value="false" ><input type="hidden" name="17/10/2019_62" id="17/10/2019_62" value="0" ><td class="tabImpair" colspan="1">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	
+	          <td width="*" align="center" valign="middle">
+	          	<a href="javascript:fcAjouterDeclaration('17/10/2019')" class="lien12"><span class="etatGtp">
+	          			<div class="inputNonModifiable">12&#x3a;31</div><input type="hidden" name="17/10/2019_heure3" id="17/10/2019_heure3" value="12&#x3a;31" size='5' onKeyPress='fcAppuiTouche(event)' tabIndex='19'></span>
+	          	</a></td>
+	          <td class="tabImpair" align="center" width="16">
+	          	<img name="17/10/2019_image3" id="17/10/2019_image3" src="/open/images/badgeage/icn_badgeage_from_intranet.1550136565283.png" border="0"  alt="Présence intranet" title="Présence intranet"  ></td>
+	          <script language="JavaScript" type="text/javascript">
+              			</script>
+			  </tr>
+	      </table>
+	    </td>
+	<input type="hidden" name="17/10/2019" id="17/10/2019" value="17&#x2f;10&#x2f;2019" ><input type="hidden" name="17/10/2019_3" id="17/10/2019_3" value="" ><input type="hidden" name="17/10/2019_oidOrigine3" id="17/10/2019_oidOrigine3" value="4888411" ><input type='hidden' name='17/10/2019_heure3' value='12:31'>
+			  <input type="hidden" name="17/10/2019_mission3" id="17/10/2019_mission3" value="" ><input type="hidden" name="17/10/2019_image3" id="17/10/2019_image3" value="images&#x2f;badgeage&#x2f;icn_badgeage_from_intranet.png" ><input type="hidden" name="17/10/2019_modifiable3" id="17/10/2019_modifiable3" value="false" ><input type="hidden" name="17/10/2019_63" id="17/10/2019_63" value="0" ><td class="tabImpair" colspan="1">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	
+	          <td width="*" align="center" valign="middle">
+	          	<a href="javascript:fcAjouterDeclaration('17/10/2019')" class="lien12"><span class="etatGtp">
+	          			<div class="inputNonModifiable">13&#x3a;53</div><input type="hidden" name="17/10/2019_heure4" id="17/10/2019_heure4" value="13&#x3a;53" size='5' onKeyPress='fcAppuiTouche(event)' tabIndex='20'></span>
+	          	</a></td>
+	          <td class="tabImpair" align="center" width="16">
+	          	<img name="17/10/2019_image4" id="17/10/2019_image4" src="/open/images/badgeage/icn_badgeage_from_intranet.1550136565283.png" border="0"  alt="Présence intranet" title="Présence intranet"  ></td>
+	          <script language="JavaScript" type="text/javascript">
+              			</script>
+			  </tr>
+	      </table>
+	    </td>
+	<input type="hidden" name="17/10/2019" id="17/10/2019" value="17&#x2f;10&#x2f;2019" ><input type="hidden" name="17/10/2019_4" id="17/10/2019_4" value="" ><input type="hidden" name="17/10/2019_oidOrigine4" id="17/10/2019_oidOrigine4" value="4888897" ><input type='hidden' name='17/10/2019_heure4' value='13:53'>
+			  <input type="hidden" name="17/10/2019_mission4" id="17/10/2019_mission4" value="" ><input type="hidden" name="17/10/2019_image4" id="17/10/2019_image4" value="images&#x2f;badgeage&#x2f;icn_badgeage_from_intranet.png" ><input type="hidden" name="17/10/2019_modifiable4" id="17/10/2019_modifiable4" value="false" ><input type="hidden" name="17/10/2019_64" id="17/10/2019_64" value="0" ><td class="tabImpair" rowspan="2">
+      <table border='0' cellspacing='0' cellpadding='0'>
+        <tr>
+          <td>
+            <a href="javascript:fcChangerOffset(4)"><img name="imagePlus" id="imagePlus" src="/open/img/crayon.1452099624000.png" border="0"  alt="" title=""  align='absmiddle'></a>
+          </td>
+          <td>
+            <img border="0" src="/open/img/vide.1350547314000.gif" height="30" width="1" alt=""></td>
+        </tr>
+      </table>
+      </td>
+    <td class="tabImpair" rowspan="2"><a href="javascript:fcAjouterDeclaration('17/10/2019')" class="lien12"><img name="imageAbsence" id="imageAbsence" src="/open/img/vide.1350547314000.gif" border="0"  alt="" title=""  ></a></td>
+    <td class="tabImpair" rowspan="2"></td>
+    <td class="tabImpair"><a href="javascript:fcAjouterDeclaration('17/10/2019')" class="lien12"><div class="etatGtp">&nbsp;</div></a></td>
+    <td class="tabImpair"><a href="javascript:fcAjouterDeclaration('17/10/2019')" class="lien12"><div class="etatGtp">&nbsp;</div></a></td>
+    <td class="tabImpair"><a href="javascript:fcAjouterDeclaration('17/10/2019')" class="lien12"><div class="etatGtp">&nbsp;</div></a></td>
+</tr>
+  <tr height="25">
+  	<td colspan="4" class="tabImpair">
+ 	<table cellpadding="0" cellspacing="0">
+ 			<tr>
+ 				<td valign="middle" width="20px" class="tabImpair">
+		 			<img border="0" src="/open/img/commentaire.1452099624000.png" height="16" alt="Commentaire du demandeur" title="Commentaire du demandeur"></td>
+		 		<td class="tabImpair">
+				<input type="text" name="commentaireDemandeur_17/10/2019" id="commentaireDemandeur_17/10/2019" value="" class="disabled" size="50" onKeyPress="fcAppuiTouche(event)" onfocus="fcMasqueInviteSaisie(this);" onblur="fcAjouteInviteSaisie(this);" tabIndex='21'><script type="text/javascript">
+						fcAjouteInviteSaisie(document.getElementById("commentaireDemandeur_17/10/2019"));
+					</script>
+				</td>
+			</tr>
+		</table>
+	</td>
+<td colspan="3" class="tabImpair">
+  		</td>
+    </tr>
+  <tr align="center" height="25">
+<td class="tabPair" rowspan="2">
+			&nbsp;
+</td>
+<td height="30" class="tabPair" rowspan="2">
+    	<a href="javascript:fcAjouterDeclaration('18/10/2019')" class="lien12"><div class="etatGtp">
+    		&nbsp;Ve&nbsp;
+    	</div>
+    	</a><input type="hidden" name="oidDeclaration_18/10/2019" id="oidDeclaration_18/10/2019" value="" ></td>
+    <td class="tabPair" rowspan="2"><a href="javascript:fcAjouterDeclaration('18/10/2019')" class="lien12"><div class="etatGtp">18/10/2019</div></a></td>
+    <td class="tabPair" rowspan="2"><a href="javascript:fcChangerOffset(-4)"><img name="imageMoins" id="imageMoins" src="/open/img/vide.1350547314000.gif" border="0"  alt="" title=""  ></a></td>
+    <td class="tabPair" colspan="1">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	
+	          <td width="*" align="center" valign="middle">
+	          	<a href="javascript:fcAjouterDeclaration('18/10/2019')" class="lien12"><span class="etatGtp">
+	          			<div class="inputNonModifiable">05&#x3a;59</div><input type="hidden" name="18/10/2019_heure1" id="18/10/2019_heure1" value="05&#x3a;59" size='5' onKeyPress='fcAppuiTouche(event)' tabIndex='22'></span>
+	          	</a></td>
+	          <td class="tabPair" align="center" width="16">
+	          	<img name="18/10/2019_image1" id="18/10/2019_image1" src="/open/images/badgeage/icn_badgeage_from_intranet.1550136565283.png" border="0"  alt="Présence intranet" title="Présence intranet"  ></td>
+	          <script language="JavaScript" type="text/javascript">
+              			</script>
+			  </tr>
+	      </table>
+	    </td>
+	<input type="hidden" name="18/10/2019" id="18/10/2019" value="18&#x2f;10&#x2f;2019" ><input type="hidden" name="18/10/2019_1" id="18/10/2019_1" value="" ><input type="hidden" name="18/10/2019_oidOrigine1" id="18/10/2019_oidOrigine1" value="4890685" ><input type='hidden' name='18/10/2019_heure1' value='05:59'>
+			  <input type="hidden" name="18/10/2019_mission1" id="18/10/2019_mission1" value="" ><input type="hidden" name="18/10/2019_image1" id="18/10/2019_image1" value="images&#x2f;badgeage&#x2f;icn_badgeage_from_intranet.png" ><input type="hidden" name="18/10/2019_modifiable1" id="18/10/2019_modifiable1" value="false" ><input type="hidden" name="18/10/2019_61" id="18/10/2019_61" value="0" ><td class="tabPair" colspan="1">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	
+	          <td width="*" align="center" valign="middle">
+	          	<span class="etatGtp">
+	          			<input type="text" name="18/10/2019_heure2" id="18/10/2019_heure2" value="" size='5' onKeyPress='fcAppuiTouche(event)' tabIndex='23'><img border="0" src="/open/img/delete.1452099624000.png" height="12" width="12" style="cursor: pointer;" onclick="fcClearInput( "18/10/2019_heure2")" alt=""></span>
+	          	</td>
+	          <td class="tabPair" align="center" width="16">
+	          	</td>
+	          <script language="JavaScript" type="text/javascript">
+              			</script>
+			  </tr>
+	      </table>
+	    </td>
+	<input type="hidden" name="18/10/2019" id="18/10/2019" value="18&#x2f;10&#x2f;2019" ><input type="hidden" name="18/10/2019_2" id="18/10/2019_2" value="" ><input type="hidden" name="18/10/2019_oidOrigine2" id="18/10/2019_oidOrigine2" value="" ><input type='hidden' name='18/10/2019_heure2' value=''>
+			  <input type="hidden" name="18/10/2019_mission2" id="18/10/2019_mission2" value="" ><input type="hidden" name="18/10/2019_image2" id="18/10/2019_image2" value="" ><input type="hidden" name="18/10/2019_modifiable2" id="18/10/2019_modifiable2" value="" ><input type="hidden" name="18/10/2019_62" id="18/10/2019_62" value="" ><td class="tabPair" colspan="1">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	
+	          <td width="*" align="center" valign="middle">
+	          	<span class="etatGtp">
+	          			<input type="text" name="18/10/2019_heure3" id="18/10/2019_heure3" value="" size='5' onKeyPress='fcAppuiTouche(event)' tabIndex='24'><img border="0" src="/open/img/delete.1452099624000.png" height="12" width="12" style="cursor: pointer;" onclick="fcClearInput( "18/10/2019_heure3")" alt=""></span>
+	          	</td>
+	          <td class="tabPair" align="center" width="16">
+	          	</td>
+	          <script language="JavaScript" type="text/javascript">
+              			</script>
+			  </tr>
+	      </table>
+	    </td>
+	<input type="hidden" name="18/10/2019" id="18/10/2019" value="18&#x2f;10&#x2f;2019" ><input type="hidden" name="18/10/2019_3" id="18/10/2019_3" value="" ><input type="hidden" name="18/10/2019_oidOrigine3" id="18/10/2019_oidOrigine3" value="" ><input type='hidden' name='18/10/2019_heure3' value=''>
+			  <input type="hidden" name="18/10/2019_mission3" id="18/10/2019_mission3" value="" ><input type="hidden" name="18/10/2019_image3" id="18/10/2019_image3" value="" ><input type="hidden" name="18/10/2019_modifiable3" id="18/10/2019_modifiable3" value="" ><input type="hidden" name="18/10/2019_63" id="18/10/2019_63" value="" ><td class="tabPair" colspan="1">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	
+	          <td width="*" align="center" valign="middle">
+	          	<span class="etatGtp">
+	          			<input type="text" name="18/10/2019_heure4" id="18/10/2019_heure4" value="" size='5' onKeyPress='fcAppuiTouche(event)' tabIndex='25'><img border="0" src="/open/img/delete.1452099624000.png" height="12" width="12" style="cursor: pointer;" onclick="fcClearInput( "18/10/2019_heure4")" alt=""></span>
+	          	</td>
+	          <td class="tabPair" align="center" width="16">
+	          	</td>
+	          <script language="JavaScript" type="text/javascript">
+              			</script>
+			  </tr>
+	      </table>
+	    </td>
+	<input type="hidden" name="18/10/2019" id="18/10/2019" value="18&#x2f;10&#x2f;2019" ><input type="hidden" name="18/10/2019_4" id="18/10/2019_4" value="" ><input type="hidden" name="18/10/2019_oidOrigine4" id="18/10/2019_oidOrigine4" value="" ><input type='hidden' name='18/10/2019_heure4' value=''>
+			  <input type="hidden" name="18/10/2019_mission4" id="18/10/2019_mission4" value="" ><input type="hidden" name="18/10/2019_image4" id="18/10/2019_image4" value="" ><input type="hidden" name="18/10/2019_modifiable4" id="18/10/2019_modifiable4" value="" ><input type="hidden" name="18/10/2019_64" id="18/10/2019_64" value="" ><td class="tabPair" rowspan="2">
+      <table border='0' cellspacing='0' cellpadding='0'>
+        <tr>
+          <td>
+            <a href="javascript:fcChangerOffset(4)"><img name="imagePlus" id="imagePlus" src="/open/img/crayon.1452099624000.png" border="0"  alt="" title=""  align='absmiddle'></a>
+          </td>
+          <td>
+            <img border="0" src="/open/img/vide.1350547314000.gif" height="30" width="1" alt=""></td>
+        </tr>
+      </table>
+      </td>
+    <td class="tabPair" rowspan="2"><a href="javascript:fcAjouterDeclaration('18/10/2019')" class="lien12"><img name="imageAbsence" id="imageAbsence" src="/open/img/vide.1350547314000.gif" border="0"  alt="" title=""  ></a></td>
+    <td class="tabPair" rowspan="2"></td>
+    <td class="tabPair"><a href="javascript:fcAjouterDeclaration('18/10/2019')" class="lien12"><div class="etatGtp">&nbsp;</div></a></td>
+    <td class="tabPair"><a href="javascript:fcAjouterDeclaration('18/10/2019')" class="lien12"><div class="etatGtp">&nbsp;</div></a></td>
+    <td class="tabPair"><a href="javascript:fcAjouterDeclaration('18/10/2019')" class="lien12"><div class="etatGtp">&nbsp;</div></a></td>
+</tr>
+  <tr height="25">
+  	<td colspan="4" class="tabPair">
+ 	<table cellpadding="0" cellspacing="0">
+ 			<tr>
+ 				<td valign="middle" width="20px" class="tabPair">
+		 			<img border="0" src="/open/img/commentaire.1452099624000.png" height="16" alt="Commentaire du demandeur" title="Commentaire du demandeur"></td>
+		 		<td class="tabPair">
+				<input type="text" name="commentaireDemandeur_18/10/2019" id="commentaireDemandeur_18/10/2019" value="" class="disabled" size="50" onKeyPress="fcAppuiTouche(event)" onfocus="fcMasqueInviteSaisie(this);" onblur="fcAjouteInviteSaisie(this);" tabIndex='26'><script type="text/javascript">
+						fcAjouteInviteSaisie(document.getElementById("commentaireDemandeur_18/10/2019"));
+					</script>
+				</td>
+			</tr>
+		</table>
+	</td>
+<td colspan="3" class="tabPair">
+  		</td>
+    </tr>
+  <tr align="center" height="25">
+<td class="tabImpair" rowspan="1">
+			&nbsp;
+</td>
+<td height="30" class="tabImpair" rowspan="1">
+    	<div class="etatGtp">
+    		&nbsp;Sa&nbsp;
+    	</div>
+    	<input type="hidden" name="oidDeclaration_19/10/2019" id="oidDeclaration_19/10/2019" value="" ></td>
+    <td class="tabImpair" rowspan="1"><div class="etatGtp">19/10/2019</div></td>
+    <td class="tabImpair" rowspan="1"><a href="javascript:fcChangerOffset(-4)"><img name="imageMoins" id="imageMoins" src="/open/img/vide.1350547314000.gif" border="0"  alt="" title=""  ></a></td>
+    <td class="tabImpair" colspan="1">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	
+	          <td class="tabImpair" width="100%" align="center" colspan="2">
+	          	<div class="etatGtp">
+	          		&nbsp;
+	          	</div>
+              	</td>
+			  <td class="tabImpair" align="center" width="16">
+			  	</td>
+			  </tr>
+	      </table>
+	    </td>
+	<td class="tabImpair" colspan="1">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	
+	          <td class="tabImpair" width="100%" align="center" colspan="2">
+	          	<div class="etatGtp">
+	          		&nbsp;
+	          	</div>
+              	</td>
+			  <td class="tabImpair" align="center" width="16">
+			  	</td>
+			  </tr>
+	      </table>
+	    </td>
+	<td class="tabImpair" colspan="1">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	
+	          <td class="tabImpair" width="100%" align="center" colspan="2">
+	          	<div class="etatGtp">
+	          		&nbsp;
+	          	</div>
+              	</td>
+			  <td class="tabImpair" align="center" width="16">
+			  	</td>
+			  </tr>
+	      </table>
+	    </td>
+	<td class="tabImpair" colspan="1">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	
+	          <td class="tabImpair" width="100%" align="center" colspan="2">
+	          	<div class="etatGtp">
+	          		&nbsp;
+	          	</div>
+              	</td>
+			  <td class="tabImpair" align="center" width="16">
+			  	</td>
+			  </tr>
+	      </table>
+	    </td>
+	<td class="tabImpair" rowspan="1">
+      <table border='0' cellspacing='0' cellpadding='0'>
+        <tr>
+          <td>
+            <a href="javascript:fcChangerOffset(4)"><img name="imagePlus" id="imagePlus" src="/open/img/vide.1350547314000.gif" border="0"  alt="" title=""  align='absmiddle'></a>
+          </td>
+          <td>
+            <img border="0" src="/open/img/vide.1350547314000.gif" height="30" width="1" alt=""></td>
+        </tr>
+      </table>
+      </td>
+    <td class="tabImpair" rowspan="1"><img name="imageAbsence" id="imageAbsence" src="/open/img/vide.1350547314000.gif" border="0"  alt="" title=""  ></td>
+    <td class="tabImpair" rowspan="1"></td>
+    <td class="tabImpair"><div class="etatGtp">&nbsp;</div></td>
+    <td class="tabImpair"><div class="etatGtp">&nbsp;</div></td>
+    <td class="tabImpair"><div class="etatGtp">&nbsp;</div></td>
+</tr>
+  <tr align="center" height="25">
+<td class="tabPair" rowspan="1">
+			&nbsp;
+</td>
+<td height="30" class="tabPair" rowspan="1">
+    	<div class="etatGtp">
+    		&nbsp;Di&nbsp;
+    	</div>
+    	<input type="hidden" name="oidDeclaration_20/10/2019" id="oidDeclaration_20/10/2019" value="" ></td>
+    <td class="tabPair" rowspan="1"><div class="etatGtp">20/10/2019</div></td>
+    <td class="tabPair" rowspan="1"><a href="javascript:fcChangerOffset(-4)"><img name="imageMoins" id="imageMoins" src="/open/img/vide.1350547314000.gif" border="0"  alt="" title=""  ></a></td>
+    <td class="tabPair" colspan="1">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	
+	          <td class="tabPair" width="100%" align="center" colspan="2">
+	          	<div class="etatGtp">
+	          		&nbsp;
+	          	</div>
+              	</td>
+			  <td class="tabPair" align="center" width="16">
+			  	</td>
+			  </tr>
+	      </table>
+	    </td>
+	<td class="tabPair" colspan="1">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	
+	          <td class="tabPair" width="100%" align="center" colspan="2">
+	          	<div class="etatGtp">
+	          		&nbsp;
+	          	</div>
+              	</td>
+			  <td class="tabPair" align="center" width="16">
+			  	</td>
+			  </tr>
+	      </table>
+	    </td>
+	<td class="tabPair" colspan="1">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	
+	          <td class="tabPair" width="100%" align="center" colspan="2">
+	          	<div class="etatGtp">
+	          		&nbsp;
+	          	</div>
+              	</td>
+			  <td class="tabPair" align="center" width="16">
+			  	</td>
+			  </tr>
+	      </table>
+	    </td>
+	<td class="tabPair" colspan="1">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	
+	          <td class="tabPair" width="100%" align="center" colspan="2">
+	          	<div class="etatGtp">
+	          		&nbsp;
+	          	</div>
+              	</td>
+			  <td class="tabPair" align="center" width="16">
+			  	</td>
+			  </tr>
+	      </table>
+	    </td>
+	<td class="tabPair" rowspan="1">
+      <table border='0' cellspacing='0' cellpadding='0'>
+        <tr>
+          <td>
+            <a href="javascript:fcChangerOffset(4)"><img name="imagePlus" id="imagePlus" src="/open/img/vide.1350547314000.gif" border="0"  alt="" title=""  align='absmiddle'></a>
+          </td>
+          <td>
+            <img border="0" src="/open/img/vide.1350547314000.gif" height="30" width="1" alt=""></td>
+        </tr>
+      </table>
+      </td>
+    <td class="tabPair" rowspan="1"><img name="imageAbsence" id="imageAbsence" src="/open/img/vide.1350547314000.gif" border="0"  alt="" title=""  ></td>
+    <td class="tabPair" rowspan="1"></td>
+    <td class="tabPair"><div class="etatGtp">&nbsp;</div></td>
+    <td class="tabPair"><div class="etatGtp">&nbsp;</div></td>
+    <td class="tabPair"><div class="etatGtp">&nbsp;</div></td>
+</tr>
+  </table>
+
+
+
+&nbsp;<table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
+  <tr> 
+    <td class="buttonSeparator" width="84%">&nbsp;</td>
+    <td width="1%" >&nbsp;</td>
+    <td width="15%" class="tdAction"><a href="javascript:fcValiderDeclarations()" class="boutonAction">Valider</a></td>
+  </tr>
+  <tr>
+    <td>
+      <br>
+	  <table width="100%" border="0" cellspacing="3" cellpadding="1" align="left">
+  <tr height="20">
+<td width="20"><img border="0" src="/open/images/badgeage/icn_badgeage_from_auto.1550136565283.png" style="border:none" alt="Présence automatique" title="Présence automatique"></td>
+	<td class="calendrierMoisLegende">Présence automatique</td>
+<td width="20"><img border="0" src="/open/images/badgeage/icn_badgeage_from_manual_change.1550136565283.png" style="border:none" alt="Présence modifiée" title="Présence modifiée"></td>
+	<td class="calendrierMoisLegende">Présence modifiée</td>
+	<td width="20"><img border="0" src="/open/images/badgeage/icn_badgeage_from_terminal_saisie_manuelle.1550136565283.png" style="border:none" alt="Présence sans badge" title="Présence sans badge"></td>
+	<td class="calendrierMoisLegende">Présence sans badge</td>
+  </tr> 
+  <tr height="20">
+  	<td width="20"><img border="0" src="/open/images/badgeage/icn_badgeage_from_intranet.1550136565283.png" style="border:none" alt="Présence intranet" title="Présence intranet"></td>
+	<td class="calendrierMoisLegende">Présence intranet</td>
+	<td width="20"><img border="0" src="/open/images/badgeage/icn_badgeage_from_declaration_validated.1550136565283.png" style="border:none" alt="Présence modifiée par déclaration" title="Présence modifiée par déclaration"></td>
+	<td class="calendrierMoisLegende">Présence modifiée par déclaration</td>
+	<td width="20"><img border="0" src="/open/img/icn_badgeage_from_declaration_added.1498051738000.png" style="border:none" alt="Présence ajoutée par déclaration" title="Présence ajoutée par déclaration"></td>
+	<td class="calendrierMoisLegende">Présence ajoutée par déclaration</td>
+  </tr>
+  <tr height="20">
+<td width="20"><img border="0" src="/open/images/badgeage/icn_badgeage_from_import.1550136565283.png" style="border:none" alt="Présence importée" title="Présence importée"></td>
+	<td class="calendrierMoisLegende">Présence importée</td>  
+  	<td width="20"><img border="0" src="/open/img/demandeAutre.1452176360000.png" height="13" width="13" style="border:none" alt="Déclaration effectuée par une autre personne" title="Déclaration effectuée par une autre personne"></td>
+	<td class="calendrierMoisLegende" colspan="5">Déclaration effectuée par une autre personne</td>
+  </tr>
+</table></td>
+  </tr>
+</table>
+</td>
+	</tr>
+</table>
+    </td>
+  </tr>
+</table>
+<input type="hidden" name="_csrf_bodet" value="c49909d9-e478-4c92-9875-38014504d0c6" /></form>
+<!-- B-SUPPORT -->
+	<div id="popupcalendar" class="text" align="center"></div>
+</body>
+</html>
